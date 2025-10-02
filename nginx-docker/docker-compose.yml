@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Configuración personalizada de nginx
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # Certificados locales
+      - ./ssl/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro
+      - ./ssl/cert-key.pem:/etc/ssl/private/cert-key.pem:ro
+    networks:
+      - lan
+
+networks:
+  lan:
+    driver: bridge
