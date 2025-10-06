@@ -1,0 +1,15 @@
+# Redis configuration generated from template
+bind ${REDIS_BIND}
+protected-mode ${REDIS_PROTECTED_MODE}
+port ${REDIS_PORT}
+
+requirepass ${REDIS_PASSWORD}
+
+# Persistence
+dir /data
+appendonly yes
+save 60 1
+
+# Optional memory tuning
+# maxmemory 512mb
+# maxmemory-policy allkeys-lru
