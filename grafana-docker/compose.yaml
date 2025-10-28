@@ -1,19 +1,23 @@
 name: grafana
 services:
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
     ports:
-     - '3000:3000'
-    volumes:
-      - grafana_data:/var/lib/grafana
+     - "3000:3000"
     environment:
       - GF_LOG_LEVEL=error
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - loki
+
   loki:
-    image: grafana/loki
+    image: grafana/loki:3.3.2
     container_name: loki
     restart: unless-stopped
     ports:
@@ -21,7 +25,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - loki_data:/loki
-      - /root/grafana/loki-config.yaml:/etc/loki/local-config.yaml
+      - /root/grafana/loki-config.yaml:/etc/loki/local-config.yaml:ro
 
 volumes:
   grafana_data:
