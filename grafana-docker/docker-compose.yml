@@ -10,7 +10,7 @@ services:
       - GF_LOG_LEVEL=error
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_SECURITY_ALLOW_EMBEDDING=true
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin # This should be an environment variable later on..
     volumes:
       - grafana_data:/var/lib/grafana
     depends_on:
