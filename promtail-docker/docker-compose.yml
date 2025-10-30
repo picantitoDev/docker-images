@@ -1,0 +1,17 @@
+
+name: promtail
+
+services:
+  promtail:
+    image: grafana/promtail:3.3.2
+    container_name: promtail
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/config.yaml
+    volumes:
+      - /root/promtail/promtail-config.yaml:/etc/promtail/config.yaml:ro
+      - /root/promtail/positions:/tmp
+      - /mnt/proxy-logs/docker:/mnt/proxy-logs/docker:ro
+      - /mnt/app-logs/docker:/mnt/app-logs/docker:ro
+      - /mnt/db-logs/docker:/mnt/db-logs/docker:ro
+    ports:
+      - "9080:9080"
