@@ -1,0 +1,28 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+positions:
+  filename: /tmp/positions.yaml
+clients:
+  - url: http://10.10.0.2:3100/loki/api/v1/push
+scrape_configs:
+  - job_name: proxy_docker
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: proxy_docker
+          __path__: /mnt/proxy-logs/docker/*/*-json.log
+
+  - job_name: app_docker
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: app_docker
+          __path__: /mnt/app-logs/docker/*/*-json.log
+
+  - job_name: db_docker
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: db_docker
+          __path__: /mnt/db-logs/docker/*/*-json.log
